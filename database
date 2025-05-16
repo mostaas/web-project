@@ -1,0 +1,134 @@
+-- disable FK checks while creating
+SET FOREIGN_KEY_CHECKS = 0;
+
+CREATE TABLE IF NOT EXISTS `User` (
+  `userId` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(255) NOT NULL,
+  `passwordHash` VARCHAR(255) NOT NULL,
+  `role` ENUM('Client','Admin') NOT NULL,
+  PRIMARY KEY (`userId`),
+  UNIQUE (`username`)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `ClientCategory` (
+  `categoryId` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`categoryId`),
+  UNIQUE (`name`)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `Hotel` (
+  `hotelId` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `location` VARCHAR(255),
+  `amenities` TEXT,
+  PRIMARY KEY (`hotelId`)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `Airline` (
+  `airlineId` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`airlineId`)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `Profile` (
+  `profileId` INT NOT NULL AUTO_INCREMENT,
+  `userId` INT NOT NULL,
+  `fullName` VARCHAR(255),
+  `address` TEXT,
+  `phone` VARCHAR(50),
+  PRIMARY KEY (`profileId`),
+  UNIQUE (`userId`),
+  KEY `fk_Profile_User` (`userId`),
+  CONSTRAINT `fk_Profile_User`
+    FOREIGN KEY (`userId`) REFERENCES `User`(`userId`)
+    ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `Agreement` (
+  `agreementId` INT NOT NULL AUTO_INCREMENT,
+  `agreementNumber` VARCHAR(255) NOT NULL,
+  `startDate` DATE,
+  `endDate` DATE,
+  `terms` TEXT,
+  `prices` DECIMAL(10,2),
+  `adminId` INT NOT NULL,
+  `hotelId` INT,
+  `airlineId` INT,
+  PRIMARY KEY (`agreementId`),
+  UNIQUE (`agreementNumber`),
+  KEY `fk_Agreement_Admin`   (`adminId`),
+  KEY `fk_Agreement_Hotel`   (`hotelId`),
+  KEY `fk_Agreement_Airline` (`airlineId`),
+  CONSTRAINT `fk_Agreement_Admin`
+    FOREIGN KEY (`adminId`)   REFERENCES `User`(`userId`)    ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_Agreement_Hotel`
+    FOREIGN KEY (`hotelId`)   REFERENCES `Hotel`(`hotelId`)  ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `fk_Agreement_Airline`
+    FOREIGN KEY (`airlineId`) REFERENCES `Airline`(`airlineId`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `TripPackage` (
+  `packageId` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `destination` VARCHAR(255),
+  `startDate` DATE,
+  `endDate` DATE,
+  `price` DECIMAL(10,2) NOT NULL,
+  `duration` INT,
+  `amenities` TEXT,
+  `type` VARCHAR(100),
+  `availability` VARCHAR(255),
+  `agreementId` INT,
+  `hotelId` INT NOT NULL,
+  `airlineId` INT NOT NULL,
+  PRIMARY KEY (`packageId`),
+  KEY `fk_TripPackage_Agreement` (`agreementId`),
+  KEY `fk_TripPackage_Hotel`     (`hotelId`),
+  KEY `fk_TripPackage_Airline`   (`airlineId`),
+  CONSTRAINT `fk_TripPackage_Agreement`
+    FOREIGN KEY (`agreementId`) REFERENCES `Agreement`(`agreementId`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `fk_TripPackage_Hotel`
+    FOREIGN KEY (`hotelId`)     REFERENCES `Hotel`(`hotelId`)     ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_TripPackage_Airline`
+    FOREIGN KEY (`airlineId`)   REFERENCES `Airline`(`airlineId`)   ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `Reservation` (
+  `reservationId` INT NOT NULL AUTO_INCREMENT,
+  `clientId` INT NOT NULL,
+  `packageId` INT NOT NULL,
+  `numberOfPeople` INT NOT NULL,
+  `status` VARCHAR(50),
+  `bookingDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `travelDate` DATE NOT NULL,
+  PRIMARY KEY (`reservationId`),
+  KEY `fk_Reservation_Client`     (`clientId`),
+  KEY `fk_Reservation_TripPackage` (`packageId`),
+  CONSTRAINT `fk_Reservation_Client`
+    FOREIGN KEY (`clientId`)  REFERENCES `User`(`userId`)      ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_Reservation_TripPackage`
+    FOREIGN KEY (`packageId`) REFERENCES `TripPackage`(`packageId`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `Feedback` (
+  `feedbackId` INT NOT NULL AUTO_INCREMENT,
+  `reservationId` INT NOT NULL,
+  `clientId` INT NOT NULL,
+  `hotelRating` INT,
+  `hotelReview` TEXT,
+  `airlineRating` INT,
+  `airlineReview` TEXT,
+  `submissionDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`feedbackId`),
+  UNIQUE (`reservationId`),
+  KEY `fk_Feedback_Reservation` (`reservationId`),
+  KEY `fk_Feedback_Client`      (`clientId`),
+  CONSTRAINT `fk_Feedback_Reservation`
+    FOREIGN KEY (`reservationId`) REFERENCES `Reservation`(`reservationId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_Feedback_Client`
+    FOREIGN KEY (`clientId`)      REFERENCES `User`(`userId`)         ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+-- re-enable FK checks
+SET FOREIGN_KEY_CHECKS = 1;
