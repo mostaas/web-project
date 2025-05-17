@@ -1,0 +1,279 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  line-height: 1.6;
+  background: #f8f9fa;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Navbar */
+.navbar {
+  background: #0066cc;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar .nav-links a {
+  padding: 0.5rem 1rem;
+  background: #005bb5;
+  border-radius: 5px;
+  transition: background 0.3s;
+  color: #fff;
+}
+
+.navbar .nav-links a:hover {
+  background: #004999;
+}
+
+/* Main content */
+main {
+  padding: 2rem;
+}
+
+/* Footer */
+.footer {
+  background: #222;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  color: #0066cc;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  margin: 0.5rem 0;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: #0066cc;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background: #004999;
+}
+
+/* Detail Page Hero */
+.hero-detail {
+  position: relative;
+  height: 50vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-detail .overlay {
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+}
+.hero-detail h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Detail Container */
+.detail-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.details {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.details h2 {
+  margin-bottom: 1rem;
+  color: #0066cc;
+}
+.info-list {
+  list-style: none;
+}
+.info-list li {
+  margin: 0.5rem 0;
+}
+
+.booking-form {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.booking-form h2 {
+  margin-bottom: 1rem;
+  color: #0066cc;
+}
+.booking-form form {
+  display: flex;
+  flex-direction: column;
+}
+.booking-form label {
+  margin: 0.5rem 0 0.2rem;
+}
+.booking-form input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.booking-form button {
+  margin-top: 1.2rem;
+  background: #0066cc;
+  color: #fff;
+  border: none;
+  padding: 0.7rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.booking-form button:hover {
+  background: #004999;
+}
+
+/* Responsive: stack columns on mobile */
+@media (max-width: 768px) {
+  .detail-container {
+    grid-template-columns: 1fr;
+  }
+}
+/* CSS Additions: public/css/styles.css */
+.auth-container {
+  max-width: 400px;
+  margin: 4rem auto;
+  padding: 2.5rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+}
+.auth-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  color: #333;
+}
+.auth-container .errors {
+  background: #ffe6e6;
+  border: 1px solid #ffcccc;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+.auth-container .errors ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: #cc0000;
+}
+.auth-container form label {
+  display: block;
+  margin-bottom: 1.2rem;
+  font-size: 0.95rem;
+  color: #555;
+}
+.auth-container form input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-top: 0.25rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.auth-container form input:focus {
+  border-color: #0066cc;
+  box-shadow: 0 0 0 3px rgba(0,102,204,0.2);
+  outline: none;
+}
+.auth-container form button {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1.5rem;
+  background: #0066cc;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.auth-container form button:hover {
+  background: #005bb5;
+}
+.switch-auth {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+.switch-auth a {
+  color: #0066cc;
+  text-decoration: none;
+}
+.switch-auth a:hover {
+  text-decoration: underline;
+}
