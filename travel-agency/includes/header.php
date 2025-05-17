@@ -15,20 +15,26 @@
 </head>
 <body>
   <header class="navbar">
-    <div class="logo"><a href="/public/index.php">Travel Agency</a></div>
+    <div class="logo"><a href="../public/index.php">Travel Agency</a></div>
     <nav>
       <ul class="nav-links">
-        <li><a href="/public/index.php">Home</a></li>
-        <li><a href="/public/packages/list.php">Packages</a></li>
-        <li><a href="/public/feedback/form.php">Feedback</a></li>
-        <?php if (!empty($_SESSION['user_id'])): ?>
-          <li><a href="/public/account/reservations.php">My Reservations</a></li>
-          <li><a href="/logout.php">Logout</a></li>
-        <?php else: ?>
-          <li><a href="../login.php">Login</a></li>
-          <li><a href="../register.php">Register</a></li>
-        <?php endif; ?>
+      <?php if (empty($_SESSION['user_id'])): ?>
+        <li><a href="../public/index.php">Home</a></li>
+        <li><a href="../account/login.php">Login</a></li>
+        <li><a href="../account/register.php">Register</a></li>
         <li><a href="/public/contact.php">Contact</a></li>
+      <?php endif; ?>
+      <?php if (!empty($_SESSION['user_id'])): ?>
+        <li><a href="../public/index.php">Home</a></li>
+        <li><a href="../packages/list.php">Packages</a></li>
+        <li><a href="../feedback/form.php">Feedback</a></li>
+        <li><a href="../account/reservations.php">My Reservations</a></li>
+        <li><a href="../public/contact.php">Contact</a></li>
+        <li><a href="../account/logout.php">Logout</a></li>
+      <?php endif; ?>
+          
+        
+        
       </ul>
     </nav>
   </header>
