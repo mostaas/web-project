@@ -1,4 +1,3 @@
-<!-- File: register.php (project root) -->
 <?php
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/header.php';
@@ -10,11 +9,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Invalid CSRF token.';
     }
 
-    // Gather & validate
+    // Gather & validate inputs
     $username = trim($_POST['username']  ?? '');
-    $password = $_POST['password'] ?? '';
+    $fullName = trim($_POST['fullName']  ?? '');
+    $address  = trim($_POST['address']   ?? '');
+    $phone    = trim($_POST['phone']     ?? '');
+    $password =             $_POST['password'] ?? '';
 
-    if (!$username || !$password) {
+    if (!$username || !$fullName || !$address || !$phone || !$password) {
         $errors[] = 'All fields are required.';
     }
 
@@ -28,10 +30,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Insert new user with default role Client
             $hash = password_hash($password, PASSWORD_DEFAULT);
             $ins  = $pdo->prepare(
-                'INSERT INTO `User` (username, passwordHash, role) VALUES (?, ?, ?)'  
+                'INSERT INTO `User` (username, passwordHash, role) VALUES (?, ?, ?)'
             );
             $ins->execute([$username, $hash, 'Client']);
-            $_SESSION['user_id'] = $pdo->lastInsertId();
+            $newUserId = $pdo->lastInsertId();
+
+            // Insert profile data
+            $prof = $pdo->prepare(
+                'INSERT INTO `Profile` (userId, fullName, address, phone) VALUES (?, ?, ?, ?)'
+            );
+            $prof->execute([$newUserId, $fullName, $address, $phone]);
+
+            // Log in user
+            $_SESSION['user_id'] = $newUserId;
             header('Location: /public/index.php');
             exit;
         }
@@ -57,6 +68,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <label>Username
       <input type="text" name="username" required>
     </label>
+    <label>Full Name
+      <input type="text" name="fullName" required>
+    </label>
+    <label>Address
+      <input name="address" name="address" required></input>
+    </label>
+    <label>Phone
+      <input type="tel" name="phone" required>
+    </label>
     <label>Password
       <input type="password" name="password" required>
     </label>
@@ -69,4 +89,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
-
