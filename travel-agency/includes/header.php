@@ -179,7 +179,7 @@ $current_admin_page = ($isAdminPage && isset($current_admin_page)) ? $current_ad
     <?php else: ?>
         <!-- Public Interface Structure (from your client header) -->
         <header class="navbar"> <!-- Class from your client header -->
-            <div class="logo"><a href="<?php echo $basePath; ?>public/index.php">Travel Agency</a></div> <!-- Path adjusted -->
+            <div class="logo"><a href="<?php echo $basePath; ?>public/index.php">Travelino Agency</a></div> <!-- Path adjusted -->
             <nav>
                 <ul class="nav-links">
                     <?php if (!empty($_SESSION['user_id'])): ?>
