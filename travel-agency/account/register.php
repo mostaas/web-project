@@ -1,4 +1,6 @@
 <?php
+// File: register.php
+
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/header.php';
 
@@ -27,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->fetch()) {
             $errors[] = 'Username already taken.';
         } else {
-            // Insert new user with default role Client
+            // Insert new user
             $hash = password_hash($password, PASSWORD_DEFAULT);
             $ins  = $pdo->prepare(
                 'INSERT INTO `User` (username, passwordHash, role) VALUES (?, ?, ?)'
@@ -41,9 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             );
             $prof->execute([$newUserId, $fullName, $address, $phone]);
 
-            // Log in user
-            $_SESSION['user_id'] = $newUserId;
-            header('Location: /public/index.php');
+            // Redirect to login page after registration
+            header('Location: login.php');
             exit;
         }
     }
@@ -63,23 +64,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
   <?php endif; ?>
 
-  <form method="post" action="/register.php">
+  <form method="post" action="register.php">
     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
-    <label>Username
+
+    <label>
+      Username
       <input type="text" name="username" required>
     </label>
-    <label>Full Name
+
+    <label>
+      Full Name
       <input type="text" name="fullName" required>
     </label>
-    <label>Address
-      <input name="address" name="address" required></input>
+
+    <label>
+      Address
+      <input name="address" required>
     </label>
-    <label>Phone
+
+    <label>
+      Phone
       <input type="tel" name="phone" required>
     </label>
-    <label>Password
+
+    <label>
+      Password
       <input type="password" name="password" required>
     </label>
+
     <button type="submit">Sign Up</button>
   </form>
 
