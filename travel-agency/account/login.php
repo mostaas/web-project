@@ -19,22 +19,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         // Fetch user data
-        $stmt = $pdo->prepare('SELECT userId, passwordHash FROM `User` WHERE username = ?');
+        $stmt = $pdo->prepare('SELECT userId, passwordHash, role FROM `User` WHERE username = ?');
         $stmt->execute([$username]);
         $user = $stmt->fetch();
 
-        if (!$user) {
-            // Username not found
-            $errors[] = 'Username not found.';
-        } elseif (!password_verify($password, $user['passwordHash'])) {
-            // Wrong password
-            $errors[] = 'Incorrect password.';
+            if (!$user) {
+        $errors[] = 'Username not found.';
+    } elseif (!password_verify($password, $user['passwordHash'])) {
+        $errors[] = 'Incorrect password.';
+    } else {
+        $_SESSION['user_id'] = $user['userId'];
+
+        if ($user['role'] === 'Admin') {
+            header('Location: ../admin/dashboard.php');
         } else {
-            // Successful login
-            $_SESSION['user_id'] = $user['userId'];
             header('Location: ../public/index.php');
-            exit;
         }
+        exit;
+    }
     }
 }
 ?>
