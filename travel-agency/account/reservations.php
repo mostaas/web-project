@@ -14,9 +14,9 @@ $clientId = $_SESSION['user_id'];
 
 // 2) Handle filter
 $statusFilter = $_GET['status'] ?? '';
-$allowedStatuses = ['Pending', 'Confirmed', 'Cancelled'];
+$allowedStatuses = ['Pending', 'Confirmed', 'Cancelled', 'Done'];
 
-$query = 'SELECT r.reservationId, r.numberOfPeople, r.status, r.bookingDate, r.travelDate,
+$query = 'SELECT r.reservationId,r.packageId, r.numberOfPeople, r.status, r.bookingDate, r.travelDate,
                  p.name AS packageName, p.destination
             FROM Reservation AS r
        LEFT JOIN TripPackage AS p ON r.packageId = p.packageId
@@ -65,17 +65,20 @@ $reservations = $stmt->fetchAll();
           <p><strong>Travel Date:</strong> <?= htmlspecialchars($res['travelDate']) ?></p>
           <p><strong>People:</strong> <?= (int)$res['numberOfPeople'] ?></p>
           <p><strong>Status:</strong> <?= htmlspecialchars($res['status']) ?></p>
+      <div class="reservation-actions">
+        <a href="../packages/detail.php?id=<?= (int)$res['packageId'] ?>" class="btn details-btn">See Details</a>
 
-          <div class="reservation-actions">
-            <a href="../packages/detail.php?id=<?= (int)$res['reservationId'] ?>" class="btn details-btn">See Details</a>
+        <?php if ($res['status'] === 'Done'): ?>
+          <a href="../feedback/feedback.php?reservationId=<?= (int)$res['reservationId'] ?>" class="btn feedback-btn">Leave Feedback</a>
+        <?php endif; ?>
 
-            <?php if ($res['status'] !== 'Cancelled'): ?>
-              <form method="post" action="cancel_reservation.php" class="cancel-form">
-                <input type="hidden" name="reservationId" value="<?= (int)$res['reservationId'] ?>">
-                <button type="submit" class="btn cancel-btn">Cancel</button>
-              </form>
-            <?php endif; ?>
-          </div>
+        <?php if ($res['status'] !== 'Cancelled'): ?>
+          <form method="post" action="cancel_reservation.php" class="cancel-form">
+            <input type="hidden" name="reservationId" value="<?= (int)$res['reservationId'] ?>">
+            <button type="submit" class="btn cancel-btn">Cancel</button>
+          </form>
+        <?php endif; ?>
+      </div>
         </div>
       <?php endforeach; ?>
     </div>
