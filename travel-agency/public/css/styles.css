@@ -443,3 +443,363 @@ h2 {
   background: #ff6b00;
   color: #fff;
 }
+/* ——————————————————————————
+   Responsive Grid & Card Styles
+   —————————————————————————— */
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 2rem;
+}
+
+/* Remove fixed aspect-ratio so cards grow to fit content */
+.package-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.package-card:hover {
+  transform: translateY(-5px);
+}
+
+.package-img {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+}
+
+.package-info {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.package-info h3 {
+  margin: 0 0 0.5rem;
+  color: #ff6b00;
+}
+
+.package-info p {
+  margin: 0.25rem 0;
+  color: #555;
+  flex: 1;
+}
+
+/* Button Container */
+.package-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Shared button base */
+.package-actions .btn {
+  flex: 1 1 120px;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  text-transform: uppercase;
+  font-weight: 500;
+  text-align: center;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Primary Book Now */
+.package-actions .package-btn {
+  background: #ff6b00;
+  color: #fff;
+  border: none;
+}
+
+.package-actions .package-btn:hover {
+  background: #e65c00;
+}
+
+/* Secondary See More Details */
+.package-actions .details-btn {
+  background: transparent;
+  color: #ff6b00;
+  border: 2px solid #ff6b00;
+}
+
+.package-actions .details-btn:hover {
+  background: #ff6b00;
+  color: #fff;
+}
+.booking-btn {
+  background: #ff6b00;
+  color: #fff;
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.booking-btn:hover {
+  background: #e65c00;
+}
+/* ——————————————————————————
+   Detail Page: Portrait Image + Info
+   —————————————————————————— */
+.detail-container {
+  display: grid;
+  grid-template-columns: 300px 1fr; /* fixed photo width + flexible info column */
+  gap: 2rem;
+  align-items: start;
+  padding: 2rem;
+}
+
+.package-photo img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  object-fit: cover;
+}
+
+.package-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Make sure .details and .booking-form keep their styles */
+.details,
+.booking-form {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.booking-btn {
+  display: block;
+  width: 100%;
+  background: #ff6b00;
+  color: #fff;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  transition: background 0.3s ease;
+  margin-top: 1rem;
+}
+
+.booking-btn:hover {
+  background: #e65c00;
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 768px) {
+  .detail-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .package-photo {
+    margin-bottom: 2rem;
+  }
+}
+/* Detail Page: three-column single row */
+.detail-container {
+  display: flex;
+  justify-content: center;   /* center the whole row */
+  align-items: flex-start;    /* align tops of each column */
+  gap: 2rem;
+  padding: 2rem;
+  background: #fdf6ef;
+}
+
+/* Left column: image */
+.package-photo {
+  flex: 0 0 300px;            /* fixed width */
+}
+.package-photo img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Center column: info */
+.details {
+  flex: 1;                    /* grow to fill available space */
+  max-width: 500px;
+}
+
+/* Right column: booking form */
+.booking-form {
+  flex: 0 0 300px;            /* fixed width */
+}
+
+/* Consistent styling for panels */
+
+.details,
+.booking-form {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+}
+
+/* Responsive: stack vertically below 992px */
+@media (max-width: 992px) {
+  .detail-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .package-photo,
+  .details,
+  .booking-form {
+    width: 100%;
+    max-width: none;
+  }
+}
+/* Detail Page: fixed-size columns (300 × 450px) */
+.detail-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 2rem;
+  background: #fdf6ef;
+}
+
+
+.details,
+.booking-form {
+  width: 300px;
+  height: 450px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  box-sizing: border-box;
+  overflow-y: auto;   /* scroll if content exceeds height */
+}
+
+.package-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* Responsive: stack below 992px */
+@media (max-width: 992px) {
+  .detail-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .package-photo,
+  .details,
+  .booking-form {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+/* Reservations Grid */
+.reservations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.reservation-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+}
+
+.reservation-card h3 {
+  margin-bottom: 0.5rem;
+  color: #ff6b00;
+}
+
+.reservation-card p {
+  margin: 0.4rem 0;
+  color: #555;
+}
+
+/* Shared button base */
+.reservation-btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-transform: uppercase;
+  font-weight: 500;
+  border: 2px solid transparent;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Orange: Details */
+.details-btn {
+  @extend .reservation-btn;
+  background: transparent;
+  border-color: #ff6b00;
+  color: #ff6b00;
+}
+
+.details-btn:hover {
+  background: #ff6b00;
+  color: #fff;
+}
+
+/* Red: Cancel */
+.cancel-btn {
+  @extend .reservation-btn;
+  background: transparent;
+  border-color: #ff6b00;
+  color: #ff6b00;
+}
+
+.cancel-btn:hover {
+  background: #ff6b00;
+  color: white;
+}
+
+.reservation-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.2rem;
+  gap: 0.75rem;
+}
+
+.cancel-form {
+  margin: 0;
+}
+.reservation-filter {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 300px;
+  margin: 1rem auto 2rem;
+  font-size: 0.95rem;
+  justify-content: center;
+}
+
+.reservation-filter label {
+  color: #333;
+  font-weight: 500;
+}
+
+.reservation-filter select {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fff;
+}
