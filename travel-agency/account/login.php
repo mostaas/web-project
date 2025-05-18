@@ -18,17 +18,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        // Fetch & verify
+        // Fetch user data
         $stmt = $pdo->prepare('SELECT userId, passwordHash FROM `User` WHERE username = ?');
         $stmt->execute([$username]);
         $user = $stmt->fetch();
 
-        if ($user && password_verify($password, $user['passwordHash'])) {
-            $_SESSION['user_id'] = $user['userId'];
-            header('Location: /public/index.php');
-            exit;
+        if (!$user) {
+            // Username not found
+            $errors[] = 'Username not found.';
+        } elseif (!password_verify($password, $user['passwordHash'])) {
+            // Wrong password
+            $errors[] = 'Incorrect password.';
         } else {
-            $errors[] = 'Invalid username or password.';
+            // Successful login
+            $_SESSION['user_id'] = $user['userId'];
+            header('Location: ../public/index.php');
+            exit;
         }
     }
 }
@@ -47,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
   <?php endif; ?>
 
-  <form method="post" action="/login.php">
+  <form method="post" action="login.php">
     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
     <label>Username
       <input type="text" name="username" required>
@@ -64,4 +69,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
-
