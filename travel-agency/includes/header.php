@@ -187,13 +187,13 @@ $current_admin_page = ($isAdminPage && isset($current_admin_page)) ? $current_ad
                         <li><a href="<?php echo $basePath; ?>packages/list.php">Packages</a></li>
                         <li><a href="<?php echo $basePath; ?>feedback/form.php">Feedback</a></li>
                         <li><a href="<?php echo $basePath; ?>account/reservations.php">My Reservations</a></li>
-                        <li><a href="<?php echo $basePath; ?>public/contact.php">Contact</a></li>
+                        <li><a href="<?php echo $basePath; ?>public/index.php#contact">Contact</a></li>
                         <li><a href="<?php echo $basePath; ?>account/logout.php">Logout</a></li>
                     <?php else: // User not logged in ?>
                         <li><a href="<?php echo $basePath; ?>public/index.php">Home</a></li>
                         <li><a href="<?php echo $basePath; ?>account/login.php">Login</a></li>
                         <li><a href="<?php echo $basePath; ?>account/register.php">Register</a></li>
-                        <li><a href="<?php echo $basePath; ?>public/contact.php">Contact</a></li>
+                        <li><a href="<?php echo $basePath; ?>public/index.php#contact">Contact</a></li>
                     <?php endif; ?>
                 </ul>
             </nav>
