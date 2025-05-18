@@ -1,0 +1,854 @@
+/* admin/css/admin_styles.css */
+/* Inspired by the provided Dashboard UI Design image */
+
+:root {
+    --admin-primary-green: #3DA88C; /* Main green from image header/elements */
+    --admin-sidebar-bg: #2A7F6E;    /* Darker green for sidebar */
+    --admin-sidebar-text: #E0F2F1;  /* Light text for sidebar */
+    --admin-sidebar-active-bg: #3DA88C; /* Highlight for active link */
+    --admin-sidebar-active-text: #ffffff;
+    --admin-sidebar-hover-bg: #349580;
+    --admin-content-bg: #F4F6F8;   /* Very light gray for main content area */
+    --admin-card-bg: #ffffff;
+    --admin-text-dark: #333A42;
+    --admin-text-light: #6C7A89;
+    --admin-border-color: #E5E9ED;
+    --admin-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
+    --admin-accent-positive: #4CAF50; /* Green for positive changes/status */
+    --admin-accent-negative: #F44336; /* Red for negative changes/status */
+    --admin-accent-orange: #FF9800; /* Orange for warnings/attention */
+
+    --font-family-admin: 'Poppins', sans-serif;
+    --sidebar-width: 260px;
+}
+
+/* --- Basic Reset & Body --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body.admin-body-bg {
+    font-family: var(--font-family-admin);
+    background-color: var(--admin-content-bg); /* Main page background if any content overflows admin-main-content */
+    color: var(--admin-text-dark);
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scroll from minor overflows */
+}
+
+/* --- Main Layout Container --- */
+.admin-layout-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* --- Admin Sidebar --- */
+.admin-sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--admin-sidebar-bg);
+    color: var(--admin-sidebar-text);
+    display: flex;
+    flex-direction: column;
+    position: fixed; /* Fixed position based on image */
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1000;
+    box-shadow: 3px 0px 10px rgba(0,0,0,0.08);
+}
+.sidebar-header {
+    padding: 25px 20px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.sidebar-logo {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--admin-sidebar-text); /* Image shows "M-SoftTech" in white/light */
+    margin: 0;
+}
+.sidebar-nav {
+    flex-grow: 1;
+    padding-top: 20px;
+}
+.sidebar-nav ul {
+    list-style: none;
+}
+.sidebar-nav li a {
+    display: flex;
+    align-items: center;
+    padding: 13px 25px; /* Padding to match image */
+    color: var(--admin-sidebar-text);
+    text-decoration: none;
+    font-size: 0.95rem; /* Slightly larger */
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    position: relative;
+}
+.sidebar-nav li a:hover {
+    background-color: var(--admin-sidebar-hover-bg);
+}
+.sidebar-nav li.active > a {
+    background-color: var(--admin-sidebar-active-bg);
+    color: var(--admin-sidebar-active-text);
+    font-weight: 600;
+    
+}
+/* Active link indicator like in the image (small bar on left) */
+.sidebar-nav li.active > a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 5px; /* Width of the bar */
+    background-color: var(--white-color); /* Or var(--admin-sidebar-active-text) */
+}
+.nav-icon {
+    margin-right: 15px; /* Space between icon and text */
+    font-size: 1.1rem; /* Adjust as needed */
+    width: 20px;
+    text-align: center;
+}
+.nav-text {
+    /* flex-grow: 1; /* To allow text to take up space */
+}
+.sidebar-footer {
+    padding: 20px 25px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+.sidebar-logout-link {
+    display: flex;
+    align-items: center;
+    color: var(--admin-sidebar-text);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+.sidebar-logout-link:hover {
+    color: var(--admin-primary-green); /* Lighter green on hover */
+}
+.sidebar-support-graphic {
+    margin-top: 20px;
+    text-align: center; /* if the image has a defined width */
+}
+.sidebar-support-graphic img {
+    max-width: 80%;
+    height: auto;
+}
+
+
+/* --- Admin Main Wrapper & Content --- */
+.admin-main-wrapper {
+    flex-grow: 1;
+    margin-left: var(--sidebar-width); /* Account for fixed sidebar */
+    display: flex;
+    flex-direction: column; /* For header and main scrollable content */
+    background-color: var(--admin-content-bg);
+}
+
+.admin-main-content {
+    flex-grow: 1;
+    padding: 25px 30px; /* Padding around the content area */
+    overflow-y: auto; /* Makes this section scrollable if content overflows */
+}
+
+/* Header inside main content */
+.main-content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+.content-title {
+    font-size: 1.8rem; /* Similar to "Dashboard" in image */
+    font-weight: 600;
+    color: var(--admin-text-dark);
+    margin: 0;
+}
+.user-profile-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.notification-bell {
+    font-size: 1.3rem;
+    color: var(--admin-text-light);
+    position: relative;
+    cursor: pointer;
+}
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: var(--admin-accent-negative);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--admin-border-color);
+}
+.user-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--admin-text-dark);
+}
+
+/* Stats Card Grid */
+.stats-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive cards */
+    gap: 25px;
+    margin-bottom: 30px;
+}
+.stat-card {
+    background-color: var(--admin-card-bg);
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners as in image */
+    box-shadow: var(--admin-shadow);
+}
+.stat-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align items to start */
+    margin-bottom: 10px;
+}
+.stat-card .card-header h4 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--admin-text-light);
+}
+.stat-card .card-icon {
+    font-size: 1.5rem; /* Placeholder icon style */
+    color: var(--admin-text-light);
+}
+.stat-card .card-body .stat-value {
+    font-size: 2.2rem; /* Large number */
+    font-weight: 600;
+    color: var(--admin-text-dark);
+    margin: 0 0 5px 0;
+    line-height: 1.1;
+}
+.stat-card .card-body .stat-change {
+    font-size: 0.85rem;
+    color: var(--admin-text-light);
+}
+.stat-card .card-body .stat-change.positive { color: var(--admin-accent-positive); }
+.stat-card .card-body .stat-change.negative { color: var(--admin-accent-negative); }
+.stat-card .card-body .stat-change span {
+    margin-left: 5px;
+}
+
+/* Dashboard Content Row (Overview, Total Sale, Activity) */
+.dashboard-content-row {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 1fr; /* Ratio similar to image: Overview largest, Sale smallest, Activity medium */
+    gap: 25px;
+    align-items: flex-start; /* Ensure widgets align at top */
+}
+
+.dashboard-widget {
+    background-color: var(--admin-card-bg);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: var(--admin-shadow);
+    min-height: 300px; /* Consistent minimum height */
+}
+.widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--admin-border-color);
+}
+.widget-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--admin-text-dark);
+}
+.view-all-link {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--admin-primary-green);
+    text-decoration: none;
+}
+.view-all-link:hover {
+    text-decoration: underline;
+}
+
+/* Overview Widget */
+.overview-list {
+    list-style: none;
+}
+.overview-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    font-size: 0.9rem;
+    border-bottom: 1px dashed var(--admin-border-color);
+}
+.overview-list li:last-child {
+    border-bottom: none;
+}
+.overview-item-name {
+    color: var(--admin-text-dark);
+}
+.overview-item-value {
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 15px; /* Pill shape for status */
+    font-size: 0.8rem;
+}
+/* Status colors for overview items */
+.status-confirmed, .status-added, .status-new-client { background-color: #e6f7f0; color: var(--admin-accent-positive); }
+.status-pending { background-color: #fff8e1; color: var(--admin-accent-orange); }
+
+
+/* Total Sale Widget / Progress Circle */
+.total-sale-widget { /* Specifically target this for progress circle centering */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center its content vertically */
+}
+.progress-circle-container {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    margin: 10px auto 15px auto; /* Centering */
+}
+.progress-ring-bg, .progress-ring-fg {
+    fill: none;
+    stroke-linecap: round; /* Rounded ends for stroke */
+}
+.progress-ring-bg {
+    stroke: #E0E7EF; /* Light gray background for the circle track */
+}
+.progress-ring-fg {
+    stroke: var(--admin-primary-green); /* Main progress color */
+    transform-origin: 50% 50%;
+    transform: rotate(-90deg); /* Start from the top */
+    transition: stroke-dashoffset 0.5s ease-out;
+}
+.progress-percentage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--admin-text-dark);
+}
+.progress-subtext {
+    font-size: 0.9rem;
+    color: var(--admin-text-light);
+    text-align: center;
+    margin-top: 5px;
+}
+
+
+/* Activity Widget */
+.activity-list {
+    list-style: none;
+}
+.activity-list li {
+    display: flex;
+    align-items: flex-start; /* Align dot with start of text */
+    padding: 10px 0;
+    font-size: 0.9rem;
+}
+.activity-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 12px;
+    margin-top: 5px; /* Align dot better with text line */
+    flex-shrink: 0;
+}
+.activity-dot.green { background-color: var(--admin-accent-positive); }
+.activity-dot.orange { background-color: var(--admin-accent-orange); }
+.activity-dot.red { background-color: var(--admin-accent-negative); }
+.activity-text {
+    color: var(--admin-text-light);
+    line-height: 1.5;
+}
+
+/* Admin Footer styling */
+.admin-main-wrapper > footer.site-footer { /* More specific selector */
+    background-color: var(--admin-card-bg);
+    color: var(--admin-text-light);
+    text-align: center;
+    padding: 15px 20px;
+    font-size: 0.85rem;
+    border-top: 1px solid var(--admin-border-color);
+    margin-top: auto; /* Push footer to bottom if content is short */
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 1200px) {
+    .dashboard-content-row {
+        grid-template-columns: 1fr 1fr; /* Two columns: Overview + Sale | Activity */
+    }
+    .overview-widget { grid-column: 1 / 2; }
+    .total-sale-widget { grid-column: 2 / 3; }
+    .activity-widget { grid-column: 1 / -1; margin-top: 25px; } /* Full width below */
+}
+
+@media (max-width: 992px) { /* Tablet */
+    .admin-sidebar {
+        transform: translateX(-100%); /* Hidden by default for toggle */
+        /* Add class 'open' with JS to show: transform: translateX(0); */
+        /* To show a toggle button: make a button visible in main-content-header for this breakpoint */
+    }
+    .admin-main-wrapper {
+        margin-left: 0; /* Full width when sidebar is hidden/overlay */
+    }
+    .sidebar-header .sidebar-logo { font-size: 1.4rem; }
+    .sidebar-nav li a { padding: 12px 20px; font-size: 0.9rem; }
+    .nav-icon { margin-right: 12px; }
+
+    .dashboard-content-row {
+        grid-template-columns: 1fr; /* Stack all widgets */
+    }
+     .activity-widget { margin-top: 25px; }
+}
+
+@media (max-width: 768px) { /* Mobile */
+    :root {
+        --sidebar-width: 240px; /* Slightly narrower sidebar on mobile if shown */
+    }
+    .main-content-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .content-title { font-size: 1.5rem; }
+    .user-profile-section { align-self: flex-end; }
+
+    .stats-card-grid {
+        grid-template-columns: 1fr; /* Single column stats cards */
+    }
+    .admin-main-content {
+        padding: 20px 15px;
+    }
+}
+
+/* Example: JS Toggled Sidebar for smaller screens (if not using above translateX) */
+.admin-sidebar.open { /* Add this class with JS */
+    transform: translateX(0) !important;
+}
+/* Consider adding a hamburger toggle button visible at smaller screen sizes */
+/* A simple button would go into .main-content-header, then use JS to toggle .admin-sidebar.open */
+
+
+
+
+/* === Manage Hotels Page Styles === */
+
+/* Header Actions for Manage Pages */
+.main-content-header .header-actions {
+    /* Align with user profile section or specific layout */
+}
+.btn-primary-admin, .btn-secondary-admin {
+    display: inline-flex; /* For icon and text alignment */
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    border: none;
+}
+.btn-primary-admin {
+    background-color: var(--admin-primary-green);
+    color: var(--admin-sidebar-active-text); /* White */
+    box-shadow: 0 2px 5px rgba(61, 168, 140, 0.3);
+}
+.btn-primary-admin:hover {
+    background-color: #349580; /* Darker green */
+    box-shadow: 0 4px 8px rgba(61, 168, 140, 0.4);
+}
+.btn-secondary-admin {
+    background-color: #e0e7ef; /* Light grey */
+    color: var(--admin-text-dark);
+    border: 1px solid #cdd5e0;
+}
+.btn-secondary-admin:hover {
+    background-color: #d1d9e4;
+}
+.btn-icon {
+    font-size: 1rem; /* For emoji icons */
+}
+
+/* Admin Form Section */
+.admin-form-section {
+    background-color: var(--admin-card-bg);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: var(--admin-shadow);
+    margin-bottom: 30px;
+}
+.admin-form-section h3 {
+    font-size: 1.3rem;
+    color: var(--admin-text-dark);
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--admin-border-color);
+}
+.styled-form .form-group {
+    margin-bottom: 20px;
+}
+.styled-form label {
+    display: block;
+    font-weight: 500;
+    color: var(--admin-text-dark);
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+.styled-form label .required {
+    color: var(--admin-accent-negative);
+    font-weight: bold;
+    margin-left: 3px;
+}
+.styled-form input[type="text"],
+.styled-form input[type="email"], /* Add other input types as needed */
+.styled-form textarea,
+.styled-form select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--admin-border-color);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-family: var(--font-family-admin);
+    color: var(--admin-text-dark);
+    background-color: #F9FAFB; /* Slightly off-white input bg */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.styled-form input[type="text"]:focus,
+.styled-form textarea:focus,
+.styled-form select:focus {
+    outline: none;
+    border-color: var(--admin-primary-green);
+    box-shadow: 0 0 0 2px rgba(61, 168, 140, 0.2);
+}
+.styled-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+.styled-form .form-actions {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid var(--admin-border-color);
+    display: flex;
+    gap: 15px;
+    justify-content: flex-start; /* Or flex-end */
+}
+
+/* Admin Table Section */
+.admin-table-section {
+    background-color: var(--admin-card-bg);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: var(--admin-shadow);
+}
+.admin-table-section h3 {
+    font-size: 1.3rem;
+    color: var(--admin-text-dark);
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+.no-data-message {
+    color: var(--admin-text-light);
+    font-style: italic;
+}
+.table-responsive-wrapper {
+    overflow-x: auto; /* Make table scrollable on small screens */
+}
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+.data-table th,
+.data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--admin-border-color);
+    vertical-align: middle;
+}
+.data-table thead th {
+    background-color: #F3F4F6; /* Light header for table */
+    font-weight: 600;
+    color: var(--admin-text-dark);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+}
+.data-table tbody tr:hover {
+    background-color: #f9fafb; /* Slight hover for rows */
+}
+.data-table .amenities-cell {
+    max-width: 300px; /* Prevent amenities from making column too wide */
+    white-space: normal; /* Allow wrapping */
+    font-size: 0.85rem;
+    color: var(--admin-text-light);
+}
+.data-table .actions-cell {
+    white-space: nowrap; /* Keep action buttons on one line */
+    text-align: right; /* Align actions to the right */
+}
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-left: 8px;
+    border: 1px solid transparent;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.btn-action .action-text { /* Hide text on very small screens if needed via media query */
+    margin-left: 5px;
+}
+.btn-action.edit {
+    background-color: #E0F2FE; /* Light blue */
+    color: #0EA5E9;
+    border-color: #BAE6FD;
+}
+.btn-action.edit:hover {
+    background-color: #BAE6FD;
+    color: #0284C7;
+}
+.btn-action.delete {
+    background-color: #FEE2E2; /* Light red */
+    color: #EF4444;
+    border-color: #FECACA;
+}
+.btn-action.delete:hover {
+    background-color: #FECACA;
+    color: #DC2626;
+}
+
+/* Admin Messages (Success/Error) */
+.admin-message {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    border: 1px solid transparent;
+}
+.admin-message.success {
+    background-color: #D1FAE5; /* Light green */
+    color: #065F46; /* Dark green text */
+    border-color: #A7F3D0;
+}
+.admin-message.error {
+    background-color: #FEE2E2; /* Light red */
+    color: #991B1B; /* Dark red text */
+    border-color: #FECACA;
+}
+
+/* Responsive adjustments for forms and tables if needed */
+@media (max-width: 768px) {
+    .styled-form .form-actions {
+        flex-direction: column; /* Stack buttons on small screens */
+    }
+    .styled-form .form-actions .btn-primary-admin,
+    .styled-form .form-actions .btn-secondary-admin {
+        width: 100%;
+        text-align: center;
+    }
+    .data-table .action-text {
+        display: none; /* Hide text, show only icon for action buttons */
+    }
+    .btn-action {
+        padding: 8px; /* Make icon buttons slightly bigger */
+    }
+}
+
+
+/*     Agreement    */
+
+
+.styled-form .form-group-row {
+    display: flex;
+    gap: 20px; /* Adjust spacing between inputs */
+    align-items: flex-start; /* Or center, depending on label placement */
+}
+.styled-form .form-group-row .form-group {
+    flex: 1; /* Make each form group take equal space */
+    margin-bottom: 0; /* Remove bottom margin if it's handled by form-group-row */
+}
+
+/* Responsive adjustment for the row */
+@media (max-width: 768px) {
+    .styled-form .form-group-row {
+        flex-direction: column;
+        gap: 0; /* Reset gap or adjust as needed */
+    }
+    .styled-form .form-group-row .form-group {
+        width: 100%;
+        margin-bottom: 20px; /* Add back margin for stacked view */
+    }
+    .styled-form .form-group-row .form-group:last-child {
+        margin-bottom: 0;
+    }
+}
+
+
+/* === Modernized Date Inputs === */
+.styled-form input[type="date"] {
+    background-color: #F9FAFB; /* Consistent with other inputs */
+    padding: 10px 12px;
+    border: 1px solid var(--admin-border-color);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-family: var(--font-family-admin);
+    color: var(--admin-text-dark);
+    line-height: 1.5; /* Ensures consistent height */
+    appearance: none; /* Remove default browser appearance for some styling control */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative; /* For custom icon positioning */
+    cursor: pointer; /* Indicate it's clickable for date picker */
+}
+
+/* Custom calendar icon using an SVG background image */
+/* This provides a consistent icon across browsers */
+.styled-form input[type="date"] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236C7A89' class='bi bi-calendar-event' viewBox='0 0 16 16'%3E%3Cpath d='M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z'/%3E%3Cpath d='M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center; /* Position icon to the right */
+    background-size: 16px 16px; /* Size of the icon */
+    padding-right: 40px; /* Add padding to prevent text overlapping icon */
+}
+
+/* Style the date input's clear button (often an "X") in WebKit browsers (Chrome, Safari) */
+.styled-form input[type="date"]::-webkit-clear-button {
+    display: none; /* Hide default clear button */
+    -webkit-appearance: none;
+}
+
+/* Style the date input's calendar picker indicator in WebKit browsers */
+.styled-form input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0; /* Make the default indicator transparent, custom icon is visible */
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%; /* Make it cover the input to ensure clickability */
+    height: 100%;
+    cursor: pointer;
+}
+
+/* Focus state (consistent with other inputs) */
+.styled-form input[type="date"]:focus {
+    outline: none;
+    border-color: var(--admin-primary-green);
+    box-shadow: 0 0 0 2px rgba(61, 168, 140, 0.2);
+}
+
+/* Placeholder text styling (if you set a placeholder attribute, though date inputs often don't use it well) */
+.styled-form input[type="date"]::placeholder {
+    color: #9CA3AF; /* Lighter placeholder text */
+    opacity: 1;
+}
+/* For browsers that need specific pseudo-elements for placeholder */
+.styled-form input[type="date"]::-moz-placeholder { color: #9CA3AF; opacity: 1; }
+.styled-form input[type="date"]:-ms-input-placeholder { color: #9CA3AF; opacity: 1; }
+.styled-form input[type="date"]::-ms-input-placeholder { color: #9CA3AF; opacity: 1; }
+
+/* If the date input is not filled, style it to look like a placeholder */
+/* This requires JS to add/remove a class or uses :invalid pseudo-class if required */
+.styled-form input[type="date"]:invalid {
+    /* color: #9CA3AF; /* Or your placeholder color */
+}
+/* This is better handled by setting the value to empty string, native date pickers show format */
+
+/* === Modernized Number (Price) Input === */
+.styled-form input[type="number"] {
+    background-color: #F9FAFB; /* Consistent with other inputs */
+    padding: 10px 12px;
+    border: 1px solid var(--admin-border-color);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-family: var(--font-family-admin);
+    color: var(--admin-text-dark);
+    line-height: 1.5; /* Ensures consistent height */
+    appearance: textfield; /* Try to remove default spinner arrows in some browsers */
+    -moz-appearance: textfield; /* Firefox */
+}
+
+/* Hide spinner arrows in WebKit browsers (Chrome, Safari, Edge) */
+.styled-form input[type="number"]::-webkit-outer-spin-button,
+.styled-form input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0; /* Also remove any margins */
+}
+
+/* Focus state (consistent with other inputs) */
+.styled-form input[type="number"]:focus {
+    outline: none;
+    border-color: var(--admin-primary-green);
+    box-shadow: 0 0 0 2px rgba(61, 168, 140, 0.2);
+}
+
+/* Optional: Styling for a wrapper if you add a currency symbol */
+.input-with-symbol {
+    position: relative;
+    display: flex; /* Align symbol and input */
+    align-items: center;
+}
+
+.input-symbol {
+    position: absolute;
+    left: 12px; /* Adjust as needed */
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--admin-text-light); /* Color for the symbol */
+    font-size: 0.95rem; /* Match input font size */
+    pointer-events: none; /* So it doesn't interfere with input click */
+}
+
+/* If using a symbol, adjust padding on the input itself */
+.input-with-symbol input[type="number"],
+.input-with-symbol input[type="text"] { /* Can apply to text inputs too */
+    padding-left: 30px; /* Make space for the symbol (e.g., '$ ') */
+}
+
+/* Admin Messages (Success/Error/Info/Warning) */
+/* ... your existing .admin-message.success and .admin-message.error ... */
+
+.admin-message.info {
+    background-color: #E0F2FE; /* Light blue */
+    color: #0EA5E9; /* Tailwind sky-600 */
+    border-color: #BAE6FD; /* Tailwind sky-200 */
+}
+.admin-message.warning {
+    background-color: #FEF3C7; /* Light yellow/orange */
+    color: #D97706; /* Tailwind amber-600 */
+    border-color: #FDE68A; /* Tailwind amber-300 */
+}
