@@ -185,8 +185,7 @@ $current_admin_page = ($isAdminPage && isset($current_admin_page)) ? $current_ad
                     <?php if (!empty($_SESSION['user_id'])): ?>
                         <li><a href="<?php echo $basePath; ?>public/index.php">Home</a></li>
                         <li><a href="<?php echo $basePath; ?>packages/list.php">Packages</a></li>
-                        <li><a href="<?php echo $basePath; ?>feedback/form.php">Feedback</a></li>
-                        <li><a href="<?php echo $basePath; ?>/account/reservations.php">My Reservations</a></li>
+                        <li><a href="<?php echo $basePath; ?>account/reservations.php">My Reservations</a></li>
                         <li><a href="<?php echo $basePath; ?>public/index.php#contact">Contact</a></li>
                         <li><a href="<?php echo $basePath; ?>account/logout.php">Logout</a></li>
                     <?php else: // User not logged in ?>
